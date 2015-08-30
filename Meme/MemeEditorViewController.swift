@@ -1,6 +1,6 @@
 //
-//  ViewController.swift
-//  Meme
+//  MemeEditorViewController.swift
+//
 //
 //  Created by Simran Khalsa on 8/25/15.
 //  Copyright (c) 2015 Simran Khalsa. All rights reserved.
@@ -11,8 +11,6 @@ import AVFoundation
 
 class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIScrollViewDelegate{
     
-    
-
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
@@ -26,7 +24,6 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         NSFontAttributeName: UIFont (name: "HelveticaNeue-CondensedBlack", size: 40)!,
         NSStrokeWidthAttributeName: NSNumber (float: -5)]
     
-   
     override func viewDidLoad(){
         super.viewDidLoad()
         
@@ -153,8 +150,9 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
             imagePickerView.removeFromSuperview()
             imagePickerView = UIImageView()
             imagePickerView.image = image
-            imagePickerView.frame = CGRectMake(0, 0, image.size.width, image.size.height)
             imagePickerView.sizeToFit()
+            imagePickerView.frame = CGRectMake(0, 0, image.size.width, image.size.height)
+            
             
             scrollView.contentSize = imagePickerView.bounds.size
             scrollView.addSubview(imagePickerView)
@@ -178,7 +176,7 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         
         scrollView.minimumZoomScale = minScale
         scrollView.maximumZoomScale = 1
-        scrollView.zoomScale = 1
+        scrollView.zoomScale = minScale
         
     }
     
