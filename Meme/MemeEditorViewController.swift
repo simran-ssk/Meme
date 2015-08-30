@@ -27,14 +27,13 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.backgroundColor = UIColor.grayColor()
         scrollView.delegate = self
         topTextField.delegate = self
         bottomTextField.delegate = self
-        topTextField.defaultTextAttributes = memeTextAttributes
-        bottomTextField.defaultTextAttributes = memeTextAttributes
-        topTextField.textAlignment = NSTextAlignment.Center
-        bottomTextField.textAlignment = NSTextAlignment.Center
-        
+        setTextFieldAttributes()
+        setTextPlaceholderAttributes()
+    
     }
     
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
@@ -67,6 +66,7 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
     override func viewWillLayoutSubviews() {
         
         centerScrollViewContents()
+        setTextFieldAttributes()
         
     }
     
@@ -78,7 +78,7 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
-        
+        setTextPlaceholderAttributes()
         if textField.placeholder == nil {
             if textField == topTextField {
                 textField.placeholder = "TOP TEXT"
@@ -161,6 +161,31 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         
         textField.resignFirstResponder()
         return true
+        
+    }
+    
+    func setTextFieldAttributes() {
+        
+        topTextField.defaultTextAttributes = memeTextAttributes
+        bottomTextField.defaultTextAttributes = memeTextAttributes
+        topTextField.textAlignment = NSTextAlignment.Center
+        bottomTextField.textAlignment = NSTextAlignment.Center
+        
+    }
+    
+    func setTextPlaceholderAttributes() {
+        
+        topTextField.attributedPlaceholder = NSAttributedString(string: "TOP", attributes: [
+            NSForegroundColorAttributeName: UIColor.whiteColor(),
+            NSStrokeColorAttributeName: UIColor.blackColor(),
+            NSFontAttributeName: UIFont (name: "HelveticaNeue-CondensedBlack", size: 40)!,
+            NSStrokeWidthAttributeName: NSNumber (float: -5)])
+        
+        bottomTextField.attributedPlaceholder = NSAttributedString(string: "BOTTOM", attributes: [
+            NSForegroundColorAttributeName: UIColor.whiteColor(),
+            NSStrokeColorAttributeName: UIColor.blackColor(),
+            NSFontAttributeName: UIFont (name: "HelveticaNeue-CondensedBlack", size: 40)!,
+            NSStrokeWidthAttributeName: NSNumber (float: -5)])
         
     }
 
