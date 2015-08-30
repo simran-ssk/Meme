@@ -41,7 +41,6 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         
         topTextField.resignFirstResponder()
         bottomTextField.resignFirstResponder()
-        print("viewWillTransistion")
         
     }
     
@@ -62,6 +61,31 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         super.viewWillDisappear(animated)
         
         self.unsubscribeFromKeyboardNotifications()
+        
+    }
+    
+    override func viewWillLayoutSubviews() {
+        
+        centerScrollViewContents()
+        
+    }
+    
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+        
+        textField.placeholder = nil
+        return true
+        
+    }
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        
+        if textField.placeholder == nil {
+            if textField == topTextField {
+                textField.placeholder = "TOP TEXT"
+            }else if textField == bottomTextField {
+                textField.placeholder = "BOTTOM TEXT"
+            }
+        }
         
     }
     
@@ -152,11 +176,8 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
             imagePickerView.image = image
             imagePickerView.sizeToFit()
             imagePickerView.frame = CGRectMake(0, 0, image.size.width, image.size.height)
-            
-            
             scrollView.contentSize = imagePickerView.bounds.size
             scrollView.addSubview(imagePickerView)
-            
             setZoomParameters()
             centerScrollViewContents()
             self.dismissViewControllerAnimated(true, completion: nil)
@@ -199,6 +220,7 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         }
         
         imagePickerView.frame = contentsFrame
+        
         
     }
     
