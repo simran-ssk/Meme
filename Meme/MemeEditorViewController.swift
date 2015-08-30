@@ -24,7 +24,7 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         NSFontAttributeName: UIFont (name: "HelveticaNeue-CondensedBlack", size: 40)!,
         NSStrokeWidthAttributeName: NSNumber (float: -5)]
     
-    override func viewDidLoad(){
+    override func viewDidLoad() {
         super.viewDidLoad()
         
         scrollView.delegate = self
@@ -89,7 +89,6 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         
     }
     
-    
     func keyboardWillShow(notification: NSNotification) {
         
         if bottomTextField.isFirstResponder() {
@@ -98,14 +97,14 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         
     }
     
-    func keyboardWillHide(notification: NSNotification){
+    func keyboardWillHide(notification: NSNotification) {
         if bottomTextField.isFirstResponder() {
             self.view.frame.origin.y += getKeyboardHeight(notification)
         }
         
     }
     
-    func getKeyboardHeight(notification: NSNotification) -> CGFloat{
+    func getKeyboardHeight(notification: NSNotification) -> CGFloat {
         
         let userInfo = notification.userInfo
         let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
@@ -158,15 +157,13 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         
     }
     
-    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         
         textField.resignFirstResponder()
         return true
         
     }
-    
-    
+
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
         
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
@@ -259,7 +256,6 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         
     }
     
-    
     @IBAction func cancelButtonPressed(sender: UIBarButtonItem) {
         
         imagePickerView.removeFromSuperview()
@@ -278,8 +274,7 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         let nextController = UIActivityViewController(activityItems: [memedImage], applicationActivities: nil)
         self.presentViewController(nextController, animated: true, completion: nil)
         
-    }
-    
+    }    
     
 }
 
