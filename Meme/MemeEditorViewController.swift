@@ -7,17 +7,18 @@
 //
 
 import UIKit
+import AVFoundation
 
-class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIScrollViewDelegate{
+    
+    
 
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
-    @IBOutlet weak var albumButton: UIBarButtonItem!
     @IBOutlet weak var shareButton: UIBarButtonItem!
-    @IBOutlet weak var cancelButton: UIBarButtonItem!
-    @IBOutlet weak var imagePickerView: UIImageView!
-    
+    @IBOutlet weak var scrollView: UIScrollView!
+    var imagePickerView = UIImageView()
     
     let memeTextAttributes = [
         NSForegroundColorAttributeName: UIColor.whiteColor(),
@@ -25,15 +26,25 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         NSFontAttributeName: UIFont (name: "HelveticaNeue-CondensedBlack", size: 40)!,
         NSStrokeWidthAttributeName: NSNumber (float: -5)]
     
-    override func viewDidLoad() {
+   
+    override func viewDidLoad(){
         super.viewDidLoad()
         
+        scrollView.delegate = self
         topTextField.delegate = self
         bottomTextField.delegate = self
         topTextField.defaultTextAttributes = memeTextAttributes
         bottomTextField.defaultTextAttributes = memeTextAttributes
         topTextField.textAlignment = NSTextAlignment.Center
         bottomTextField.textAlignment = NSTextAlignment.Center
+        
+    }
+    
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        
+        topTextField.resignFirstResponder()
+        bottomTextField.resignFirstResponder()
+        print("viewWillTransistion")
         
     }
     
@@ -48,44 +59,26 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
             shareButton.enabled = false
         }
         
-        
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        
         self.unsubscribeFromKeyboardNotifications()
-    }
-    
-    
-    @IBAction func pickAnImagefromAlbum(sender: AnyObject) {
-        
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-        self.presentViewController(imagePicker, animated: true, completion: nil)
         
     }
     
-    @IBAction func pickAnImgaefromCamera(sender: AnyObject){
-        
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = UIImagePickerControllerSourceType.Camera
-        self.presentViewController(imagePicker, animated: true, completion: nil)
-        
-    }
     
-    func keyboardWillShow(notification: NSNotification){
+    func keyboardWillShow(notification: NSNotification) {
         
-        if bottomTextField.isFirstResponder(){
+        if bottomTextField.isFirstResponder() {
             self.view.frame.origin.y -= getKeyboardHeight(notification)
         }
         
     }
     
     func keyboardWillHide(notification: NSNotification){
-        
-        if bottomTextField.isFirstResponder(){
+        if bottomTextField.isFirstResponder() {
             self.view.frame.origin.y += getKeyboardHeight(notification)
         }
         
@@ -99,7 +92,7 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         
     }
     
-    func subscribeToKeyboardNotfications(){
+    func subscribeToKeyboardNotfications() {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name:
             UIKeyboardWillShowNotification, object: nil)
@@ -108,7 +101,7 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         
     }
     
-    func unsubscribeFromKeyboardNotifications(){
+    func unsubscribeFromKeyboardNotifications() {
         
         NSNotificationCenter.defaultCenter().removeObserver(self, name:
             UIKeyboardWillShowNotification, object: nil)
@@ -117,14 +110,14 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         
     }
     
-    func save() -> Meme{
+    func save() -> Meme {
         
         var meme = Meme(topTextField: topTextField.text!, bottomTextField: bottomTextField.text!, origionalImage: imagePickerView.image!, memedImage: generatedMemedImage())
         return meme
         
     }
     
-    func generatedMemedImage() -> UIImage{
+    func generatedMemedImage() -> UIImage {
         
         //Hide toolbar and nav
         self.navigationController?.setToolbarHidden(true, animated: true)
@@ -155,13 +148,71 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
         
-        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage{
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            
+            imagePickerView.removeFromSuperview()
+            imagePickerView = UIImageView()
             imagePickerView.image = image
+            imagePickerView.frame = CGRectMake(0, 0, image.size.width, image.size.height)
+            imagePickerView.sizeToFit()
+            
+            scrollView.contentSize = imagePickerView.bounds.size
+            scrollView.addSubview(imagePickerView)
+            
+            setZoomParameters()
+            centerScrollViewContents()
             self.dismissViewControllerAnimated(true, completion: nil)
+            
         }else{
             print("Nothing here!")
         }
         
+    }
+    
+    func setZoomParameters() {
+        
+        let scrollViewFrame = scrollView.frame
+        let scaleWidth = scrollViewFrame.size.width / scrollView.contentSize.width
+        let scaleHeight = scrollViewFrame.size.height / scrollView.contentSize.height
+        let minScale = min(scaleHeight, scaleWidth)
+        
+        scrollView.minimumZoomScale = minScale
+        scrollView.maximumZoomScale = 1
+        scrollView.zoomScale = 1
+        
+    }
+    
+    
+    func centerScrollViewContents() {
+        
+        let boundsSize = scrollView.bounds.size
+        var contentsFrame = imagePickerView.frame
+        
+        if contentsFrame.size.height < boundsSize.height {
+            contentsFrame.origin.y = (boundsSize.height - contentsFrame.size.height) / 2
+        }else{
+            contentsFrame.origin.y = 0
+        }
+        
+        if contentsFrame.size.width < boundsSize.width{
+            contentsFrame.origin.x = (boundsSize.width - contentsFrame.size.width) / 2
+        }else{
+            contentsFrame.origin.x = 0
+        }
+        
+        imagePickerView.frame = contentsFrame
+        
+    }
+    
+    func scrollViewDidZoom(scrollView: UIScrollView) {
+        
+        centerScrollViewContents()
+        
+    }
+    
+    func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+        
+        return imagePickerView
     }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
@@ -170,12 +221,33 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         
     }
     
+    @IBAction func pickAnImagefromAlbum(sender: AnyObject) {
+        
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        self.presentViewController(imagePicker, animated: true, completion: nil)
+        
+    }
+    
+    @IBAction func pickAnImgaefromCamera(sender: AnyObject) {
+        
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = UIImagePickerControllerSourceType.Camera
+        self.presentViewController(imagePicker, animated: true, completion: nil)
+        
+    }
+    
+    
     @IBAction func cancelButtonPressed(sender: UIBarButtonItem) {
         
-        imagePickerView.image = nil
+        imagePickerView.removeFromSuperview()
         topTextField.text = nil
         bottomTextField.text = nil
         shareButton.enabled = false
+        topTextField.resignFirstResponder()
+        bottomTextField.resignFirstResponder()
         
     }
     
@@ -190,4 +262,5 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
     
     
 }
+
 

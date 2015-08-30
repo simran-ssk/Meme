@@ -8,41 +8,41 @@
         <!--Meme Editor View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="MemeEditorViewController" customModule="Meme" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="meme" id="vXZ-lx-hvc" customClass="MemeEditorViewController" customModule="Meme" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
+                    <view key="view" contentMode="scaleAspectFit" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oUc-U6-AmG">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="TLu-BT-YAi">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                            </imageView>
+                            </scrollView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="TOP TEXT" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qfY-EF-lPt">
                                 <rect key="frame" x="252" y="103" width="97" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="BOTTOM TEXT" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lMc-Km-ACA">
                                 <rect key="frame" x="252" y="486" width="103" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="qfY-EF-lPt" secondAttribute="trailing" id="3nX-IN-tgm"/>
-                            <constraint firstAttribute="bottom" secondItem="oUc-U6-AmG" secondAttribute="bottom" id="HZI-3p-N5t"/>
+                            <constraint firstItem="TLu-BT-YAi" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="9Bs-rX-tNH"/>
                             <constraint firstItem="qfY-EF-lPt" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="25" id="N9V-my-25m"/>
                             <constraint firstItem="lMc-Km-ACA" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="NPv-ej-bDA"/>
+                            <constraint firstAttribute="bottom" secondItem="TLu-BT-YAi" secondAttribute="bottom" id="ObW-dm-Taw"/>
+                            <constraint firstAttribute="trailing" secondItem="TLu-BT-YAi" secondAttribute="trailing" id="QiC-fB-jbj"/>
                             <constraint firstItem="qfY-EF-lPt" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="Xf8-6W-DCB"/>
                             <constraint firstAttribute="trailingMargin" secondItem="lMc-Km-ACA" secondAttribute="trailing" id="dgK-gW-Fot"/>
-                            <constraint firstAttribute="trailing" secondItem="oUc-U6-AmG" secondAttribute="trailing" id="fLA-uO-3iP"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="lMc-Km-ACA" secondAttribute="bottom" constant="25" id="gSR-It-eWE"/>
-                            <constraint firstItem="oUc-U6-AmG" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="m2X-M4-sy6"/>
-                            <constraint firstItem="oUc-U6-AmG" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="zRr-aV-PRB"/>
+                            <constraint firstItem="TLu-BT-YAi" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="tdN-8L-bhd"/>
                         </constraints>
                     </view>
                     <toolbarItems>
@@ -75,11 +75,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="albumButton" destination="IDZ-WG-GQ3" id="G9s-fu-t7r"/>
                         <outlet property="bottomTextField" destination="lMc-Km-ACA" id="QgS-oK-cAS"/>
                         <outlet property="cameraButton" destination="ATj-8j-z6F" id="M0k-6P-Zh5"/>
-                        <outlet property="cancelButton" destination="Rag-5N-q1I" id="XSp-x8-Qsp"/>
-                        <outlet property="imagePickerView" destination="oUc-U6-AmG" id="4wl-Du-mOA"/>
+                        <outlet property="scrollView" destination="TLu-BT-YAi" id="rUS-aW-tEr"/>
                         <outlet property="shareButton" destination="yIq-vG-5XR" id="d7b-Wo-AfM"/>
                         <outlet property="topTextField" destination="qfY-EF-lPt" id="RgP-Ex-4Es"/>
                     </connections>
@@ -91,14 +89,14 @@
         <!--Navigation Controller-->
         <scene sceneID="wgx-6p-0Jn">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="cP3-iT-tEK" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="naviController" automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="cP3-iT-tEK" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="9f2-qZ-WzA">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
-                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="0Oe-xi-du7">
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" alpha="0.74999999999999978" contentMode="scaleToFill" id="0Oe-xi-du7">
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
                     <connections>
