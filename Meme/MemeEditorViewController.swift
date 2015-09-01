@@ -237,7 +237,6 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         
         imagePickerView.frame = contentsFrame
         
-        
     }
     
     func scrollViewDidZoom(scrollView: UIScrollView) {
