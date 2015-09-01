@@ -27,7 +27,7 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.grayColor()
+        view.backgroundColor = UIColor.grayColor()
         scrollView.delegate = self
         topTextField.delegate = self
         bottomTextField.delegate = self
@@ -46,7 +46,7 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.subscribeToKeyboardNotfications()
+        subscribeToKeyboardNotfications()
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
         if !(imagePickerView.image == nil){
             shareButton.enabled = true
@@ -59,7 +59,7 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
-        self.unsubscribeFromKeyboardNotifications()
+        unsubscribeFromKeyboardNotifications()
         
     }
     
@@ -78,28 +78,23 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
-        setTextPlaceholderAttributes()
-        if textField.placeholder == nil {
-            if textField == topTextField {
-                textField.placeholder = "TOP TEXT"
-            }else if textField == bottomTextField {
-                textField.placeholder = "BOTTOM TEXT"
-            }
-        }
         
+        setTextPlaceholderAttributes()
+    
     }
     
     func keyboardWillShow(notification: NSNotification) {
         
         if bottomTextField.isFirstResponder() {
-            self.view.frame.origin.y -= getKeyboardHeight(notification)
+            view.frame.origin.y = -getKeyboardHeight(notification)
         }
-        
+    
     }
     
     func keyboardWillHide(notification: NSNotification) {
+        
         if bottomTextField.isFirstResponder() {
-            self.view.frame.origin.y += getKeyboardHeight(notification)
+            view.frame.origin.y += getKeyboardHeight(notification)
         }
         
     }
@@ -118,7 +113,6 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
             UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name:
             UIKeyboardWillHideNotification, object: nil)
-        
     }
     
     func unsubscribeFromKeyboardNotifications() {
@@ -140,18 +134,18 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
     func generatedMemedImage() -> UIImage {
         
         //Hide toolbar and nav
-        self.navigationController?.setToolbarHidden(true, animated: true)
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        navigationController?.setToolbarHidden(true, animated: true)
+        navigationController?.setNavigationBarHidden(true, animated: true)
         
         //Render view to an Image
-        UIGraphicsBeginImageContext(self.view.frame.size)
-        self.view.drawViewHierarchyInRect(self.view.frame, afterScreenUpdates: true)
+        UIGraphicsBeginImageContext(view.frame.size)
+        view.drawViewHierarchyInRect(view.frame, afterScreenUpdates: true)
         let memedImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
         //Show toolbar and nav
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
-        self.navigationController?.setToolbarHidden(false, animated: true)
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.setToolbarHidden(false, animated: true)
         
         return memedImage
         
@@ -202,7 +196,7 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
             scrollView.addSubview(imagePickerView)
             setZoomParameters()
             centerScrollViewContents()
-            self.dismissViewControllerAnimated(true, completion: nil)
+            dismissViewControllerAnimated(true, completion: nil)
             
         }else{
             print("Nothing here!")
@@ -259,7 +253,7 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         
-        self.dismissViewControllerAnimated(true, completion: nil)
+        dismissViewControllerAnimated(true, completion: nil)
         
     }
     
@@ -268,7 +262,7 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-        self.presentViewController(imagePicker, animated: true, completion: nil)
+        presentViewController(imagePicker, animated: true, completion: nil)
         
     }
     
@@ -277,7 +271,7 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.sourceType = UIImagePickerControllerSourceType.Camera
-        self.presentViewController(imagePicker, animated: true, completion: nil)
+        presentViewController(imagePicker, animated: true, completion: nil)
         
     }
     
@@ -297,7 +291,7 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         let newMeme = save()
         let memedImage = newMeme.memedImage
         let nextController = UIActivityViewController(activityItems: [memedImage], applicationActivities: nil)
-        self.presentViewController(nextController, animated: true, completion: nil)
+        presentViewController(nextController, animated: true, completion: nil)
         
     }    
     
