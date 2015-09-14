@@ -15,11 +15,4 @@ struct Meme {
     var origionalImage: UIImage
     var memedImage: UIImage
     
-    init(topTextField: String, bottomTextField: String, origionalImage: UIImage, memedImage: UIImage){
-        self.topTextField = topTextField
-        self.bottomTextField = bottomTextField
-        self.origionalImage = origionalImage
-        self.memedImage = memedImage
-    }
-    
 }
