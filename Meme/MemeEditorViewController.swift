@@ -33,7 +33,7 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         bottomTextField.delegate = self
         setTextFieldAttributes()
         setTextPlaceholderAttributes()
-    
+        navigationController?.setToolbarHidden(false, animated: true)    
     }
     
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
@@ -127,7 +127,7 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
     func save() -> Meme {
         
         //create Meme
-        var meme = Meme(topTextField: topTextField.text!, bottomTextField: bottomTextField.text!, origionalImage:
+        let meme = Meme(topTextField: topTextField.text!, bottomTextField: bottomTextField.text!, origionalImage:
             imagePickerView.image!, memedImage: generatedMemedImage())
         
         // Add it to the memes array in the Application Delegate
@@ -190,7 +190,7 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         
     }
 
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             
@@ -210,6 +210,7 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         }
         
     }
+    
     
     func setZoomParameters() {
         
@@ -290,15 +291,23 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         topTextField.resignFirstResponder()
         bottomTextField.resignFirstResponder()
         
+        
     }
+    
+    func completionHandler() {
+        let memeTableController = self.storyboard?.instantiateViewControllerWithIdentifier("tableView") as! MemeTableViewController
+        self.presentViewController(memeTableController, animated: true, completion: nil)
+    }
+    
     
     @IBAction func shareMeme(sender: UIBarButtonItem) {
         
         let newMeme = save()
         let memedImage = newMeme.memedImage
         let nextController = UIActivityViewController(activityItems: [memedImage], applicationActivities: nil)
-        presentViewController(nextController, animated: true, completion: nil)
-        
+        presentViewController(nextController, animated: true, completion: { () -> Void in
+            self.completionHandler()
+        })
     }    
     
 }

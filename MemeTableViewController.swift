@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MemeTableViewController: UITableViewController, UITableViewDataSource {
+class MemeTableViewController: UITableViewController, UINavigationControllerDelegate {
     
     var memes: [Meme] {
         return (UIApplication.sharedApplication().delegate as! AppDelegate).memes
@@ -20,7 +20,7 @@ class MemeTableViewController: UITableViewController, UITableViewDataSource {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("MemeCell") as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("MemeCell") as UITableViewCell!
         let meme = memes[indexPath.row]
         
         // Set the name and image
@@ -42,13 +42,10 @@ class MemeTableViewController: UITableViewController, UITableViewDataSource {
     
     @IBAction func createMeme(sender: UIBarButtonItem) {
         
-        if sender == navigationItem.rightBarButtonItem {
-            let editorController = self.storyboard!.instantiateViewControllerWithIdentifier("meme") as! MemeEditorViewController
-        presentViewController(editorController, animated: true, completion: nil)
-            
-
-
-        }
+        let editorController = self.storyboard!.instantiateViewControllerWithIdentifier("meme") as! MemeEditorViewController
+        let navController = UINavigationController(rootViewController: editorController)
+        presentViewController(navController, animated: true, completion: nil)
+        
     }
     
 }
