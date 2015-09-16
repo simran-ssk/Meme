@@ -294,22 +294,20 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         
     }
     
-    func completionHandler() {
-        let memeTableController = self.storyboard?.instantiateViewControllerWithIdentifier("tableView") as! MemeTableViewController
-        self.presentViewController(memeTableController, animated: true, completion: nil)
-    }
-    
-    
     @IBAction func shareMeme(sender: UIBarButtonItem) {
         
         let newMeme = save()
         let memedImage = newMeme.memedImage
         let nextController = UIActivityViewController(activityItems: [memedImage], applicationActivities: nil)
-        presentViewController(nextController, animated: true, completion: { () -> Void in
-            self.completionHandler()
-        })
-    }    
-    
+        
+        nextController.completionWithItemsHandler = {(type: String!, completed: Bool, returnedItems: [AnyObject]!, error: NSError!) -> Void in
+            dispatch_async(dispatch_get_main_queue()){
+                self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+            }
+        }
+        
+        presentViewController(nextController, animated: true, completion: nil)
+    }
 }
 
 
