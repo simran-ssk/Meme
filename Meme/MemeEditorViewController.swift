@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIScrollViewDelegate{
+class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIScrollViewDelegate {
     
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
@@ -307,7 +307,9 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         }
         
         presentViewController(nextController, animated: true, completion: nil)
+
     }
+    
 }
 
 

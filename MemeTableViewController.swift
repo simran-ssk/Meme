@@ -10,12 +10,19 @@ import UIKit
 
 class MemeTableViewController: UITableViewController, UINavigationControllerDelegate {
     
-    var memes: [Meme] {
-        return (UIApplication.sharedApplication().delegate as! AppDelegate).memes
+    
+    var memes: [Meme]! {
+        let object = UIApplication.sharedApplication().delegate
+        let appDelegate = object as! AppDelegate
+        return appDelegate.memes
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tableView!.reloadData()
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(memes.count, terminator: "")
         return memes.count
     }
     
@@ -26,8 +33,6 @@ class MemeTableViewController: UITableViewController, UINavigationControllerDele
         
         // Set the name and image
         cell.imageView?.image = meme.memedImage
-        
-        // If the cell has a detail label, we will put the evil scheme in.
         
         return cell
     }
@@ -41,11 +46,13 @@ class MemeTableViewController: UITableViewController, UINavigationControllerDele
     }*/
     }
     
-    @IBAction func createMeme(sender: UIBarButtonItem) {
+    @IBAction func goToMemeEditor(sender: UIBarButtonItem) {
         
         let editorController = self.storyboard!.instantiateViewControllerWithIdentifier("meme") as! MemeEditorViewController
         let navController = UINavigationController(rootViewController: editorController)
+
         presentViewController(navController, animated: true, completion: nil)
+        
         
     }
     

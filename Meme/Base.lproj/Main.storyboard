@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="L9p-zE-dCW">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="L9p-zE-dCW">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -213,7 +213,7 @@
                     <navigationItem key="navigationItem" title="Sent Memes" id="woH-7z-M5a">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="JFO-7E-2DE">
                             <connections>
-                                <action selector="createMeme:" destination="CeZ-af-hKz" id="hAE-na-6xg"/>
+                                <action selector="goToMemeEditor:" destination="CeZ-af-hKz" id="zSe-6M-Flf"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
