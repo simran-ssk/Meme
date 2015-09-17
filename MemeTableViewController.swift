@@ -15,6 +15,7 @@ class MemeTableViewController: UITableViewController, UINavigationControllerDele
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print(memes.count, terminator: "")
         return memes.count
     }
     

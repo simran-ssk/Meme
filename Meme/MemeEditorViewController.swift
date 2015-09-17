@@ -206,7 +206,7 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
             dismissViewControllerAnimated(true, completion: nil)
             
         }else{
-            print("Nothing here!")
+            print("Nothing here!", terminator: "")
         }
         
     }
@@ -300,7 +300,7 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         let memedImage = newMeme.memedImage
         let nextController = UIActivityViewController(activityItems: [memedImage], applicationActivities: nil)
         
-        nextController.completionWithItemsHandler = {(type: String!, completed: Bool, returnedItems: [AnyObject]!, error: NSError!) -> Void in
+        nextController.completionWithItemsHandler = {(type: String?, completed: Bool, returnedItems: [AnyObject]?, error: NSError?) -> Void in
             dispatch_async(dispatch_get_main_queue()){
                 self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
             }
