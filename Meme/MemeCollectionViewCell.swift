@@ -10,6 +10,11 @@ import UIKit
 
 class MemeCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var memeImageView: UIImageView!
+
+    @IBOutlet var origionalImage: UIImageView!
+    @IBOutlet var topTextField: UITextField!
+    @IBOutlet var bottomTextField: UITextField!
+
+
     
 }

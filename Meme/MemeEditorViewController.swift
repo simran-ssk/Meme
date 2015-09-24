@@ -46,6 +46,8 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        setTextFieldAttributes()
+        
         subscribeToKeyboardNotfications()
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
         if !(imagePickerView.image == nil){
@@ -169,6 +171,8 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         
         topTextField.defaultTextAttributes = memeTextAttributes
         bottomTextField.defaultTextAttributes = memeTextAttributes
+        topTextField.adjustsFontSizeToFitWidth = true
+        bottomTextField.adjustsFontSizeToFitWidth = true
         topTextField.textAlignment = NSTextAlignment.Center
         bottomTextField.textAlignment = NSTextAlignment.Center
         

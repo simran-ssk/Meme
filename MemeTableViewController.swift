@@ -10,6 +10,12 @@ import UIKit
 
 class MemeTableViewController: UITableViewController, UINavigationControllerDelegate {
     
+    let memeTextAttributes = [
+        NSForegroundColorAttributeName: UIColor.whiteColor(),
+        NSStrokeColorAttributeName: UIColor.blackColor(),
+        NSFontAttributeName: UIFont (name: "HelveticaNeue-CondensedBlack", size: 14)!,
+        NSStrokeWidthAttributeName: NSNumber (float: -3)]
+
     
     var memes: [Meme]! {
         let object = UIApplication.sharedApplication().delegate
@@ -17,10 +23,16 @@ class MemeTableViewController: UITableViewController, UINavigationControllerDele
         return appDelegate.memes
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+    }
+    
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.tableView!.reloadData()
-    }
+           }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return memes.count
@@ -28,13 +40,29 @@ class MemeTableViewController: UITableViewController, UINavigationControllerDele
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("MemeCell") as UITableViewCell!
+        let cell = self.tableView.dequeueReusableCellWithIdentifier("MemeCell") as! MemeTableCell
         let meme = memes[indexPath.row]
         
-        // Set the name and image
-        cell.imageView?.image = meme.memedImage
+        
+        cell.sentMemeImage?.image = meme.origionalImage
+        cell.topTextField?.text = meme.topTextField
+        cell.bottomTextField?.text = meme.bottomTextField
+        cell.sentMemeName?.text = meme.topTextField + "..." + meme.bottomTextField
+        
+        setTextFieldAttributes(cell)
         
         return cell
+    }
+    
+    func setTextFieldAttributes(cell: MemeTableCell) {
+        
+        cell.topTextField.defaultTextAttributes = memeTextAttributes
+        cell.bottomTextField.defaultTextAttributes = memeTextAttributes
+        cell.topTextField.userInteractionEnabled = false
+        cell.bottomTextField.userInteractionEnabled = false
+        cell.topTextField.textAlignment = NSTextAlignment.Center
+        cell.bottomTextField.textAlignment = NSTextAlignment.Center
+        
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B18F40121BAA79270066420E /* MemeTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18F40111BAA79270066420E /* MemeTableCell.swift */; settings = {ASSET_TAGS = (); }; };
 		B19438431B8D6D0000421790 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19438421B8D6D0000421790 /* AppDelegate.swift */; };
 		B19438451B8D6D0000421790 /* MemeEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19438441B8D6D0000421790 /* MemeEditorViewController.swift */; };
 		B194384A1B8D6D0000421790 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B19438491B8D6D0000421790 /* Images.xcassets */; };
@@ -32,6 +33,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B18F40111BAA79270066420E /* MemeTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemeTableCell.swift; sourceTree = "<group>"; };
 		B194383D1B8D6D0000421790 /* Meme.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Meme.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B19438411B8D6D0000421790 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B19438421B8D6D0000421790 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 				B19438491B8D6D0000421790 /* Images.xcassets */,
 				B194384B1B8D6D0000421790 /* LaunchScreen.xib */,
 				B19438401B8D6D0000421790 /* Supporting Files */,
+				B18F40111BAA79270066420E /* MemeTableCell.swift */,
 			);
 			path = Meme;
 			sourceTree = "<group>";
@@ -240,6 +243,7 @@
 				B1DC3AFF1B968F1800E35461 /* MemeTableViewController.swift in Sources */,
 				B1AC88E71BA67FDD00BBEE2E /* MemeViewController.swift in Sources */,
 				B19438431B8D6D0000421790 /* AppDelegate.swift in Sources */,
+				B18F40121BAA79270066420E /* MemeTableCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
