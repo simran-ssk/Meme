@@ -17,6 +17,8 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
     @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var scrollView: UIScrollView!
     var imagePickerView = UIImageView()
+    var flag1: Bool = true
+    var flag2: Bool = true
     
     let memeTextAttributes = [
         NSForegroundColorAttributeName: UIColor.whiteColor(),
@@ -31,9 +33,7 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         scrollView.delegate = self
         topTextField.delegate = self
         bottomTextField.delegate = self
-        setTextFieldAttributes()
-        setTextPlaceholderAttributes()
-        navigationController?.setToolbarHidden(false, animated: true)    
+        
     }
     
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
@@ -71,18 +71,25 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         setTextFieldAttributes()
         
     }
+
     
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
         
-        textField.placeholder = nil
+        if textField == topTextField {
+            if flag1 {
+                textField.text = nil
+                flag1 = false
+            }
+        }
+        if textField == bottomTextField {
+            if flag2 {
+                bottomTextField.text = nil
+                flag2 = false
+
+            }
+        }
         return true
         
-    }
-    
-    func textFieldDidEndEditing(textField: UITextField) {
-        
-        setTextPlaceholderAttributes()
-    
     }
     
     func keyboardWillShow(notification: NSNotification) {
@@ -126,17 +133,13 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         
     }
     
-    func save() -> Meme {
-        
-        //create Meme
-        let meme = Meme(topTextField: topTextField.text!, bottomTextField: bottomTextField.text!, origionalImage:
-            imagePickerView.image!, memedImage: generatedMemedImage())
+    func save(meme: Meme) {
         
         // Add it to the memes array in the Application Delegate
         let object = UIApplication.sharedApplication().delegate
         let appDelegate = object as! AppDelegate
         appDelegate.memes.append(meme)
-        return meme
+
         
     }
     
@@ -145,6 +148,7 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         //Hide toolbar and nav
         navigationController?.setToolbarHidden(true, animated: true)
         navigationController?.setNavigationBarHidden(true, animated: true)
+        view.backgroundColor = UIColor.clearColor()
         
         //Render view to an Image
         UIGraphicsBeginImageContext(view.frame.size)
@@ -153,6 +157,7 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         UIGraphicsEndImageContext()
         
         //Show toolbar and nav
+        view.backgroundColor = UIColor.grayColor()
         navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.setToolbarHidden(false, animated: true)
         
@@ -171,28 +176,11 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         
         topTextField.defaultTextAttributes = memeTextAttributes
         bottomTextField.defaultTextAttributes = memeTextAttributes
-        topTextField.adjustsFontSizeToFitWidth = true
-        bottomTextField.adjustsFontSizeToFitWidth = true
         topTextField.textAlignment = NSTextAlignment.Center
         bottomTextField.textAlignment = NSTextAlignment.Center
         
     }
     
-    func setTextPlaceholderAttributes() {
-        
-        topTextField.attributedPlaceholder = NSAttributedString(string: "TOP", attributes: [
-            NSForegroundColorAttributeName: UIColor.whiteColor(),
-            NSStrokeColorAttributeName: UIColor.blackColor(),
-            NSFontAttributeName: UIFont (name: "HelveticaNeue-CondensedBlack", size: 40)!,
-            NSStrokeWidthAttributeName: NSNumber (float: -5)])
-        
-        bottomTextField.attributedPlaceholder = NSAttributedString(string: "BOTTOM", attributes: [
-            NSForegroundColorAttributeName: UIColor.whiteColor(),
-            NSStrokeColorAttributeName: UIColor.blackColor(),
-            NSFontAttributeName: UIFont (name: "HelveticaNeue-CondensedBlack", size: 40)!,
-            NSStrokeWidthAttributeName: NSNumber (float: -5)])
-        
-    }
 
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
@@ -288,30 +276,47 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
     
     @IBAction func cancelButtonPressed(sender: UIBarButtonItem) {
         
-        imagePickerView.removeFromSuperview()
-        topTextField.text = nil
-        bottomTextField.text = nil
+        
+        /*imagePickerView.removeFromSuperview()
+        topTextField.text = "TOP"
+        bottomTextField.text = "BOTTOM"
         shareButton.enabled = false
         topTextField.resignFirstResponder()
-        bottomTextField.resignFirstResponder()
-        
+        bottomTextField.resignFirstResponder()*/
+        presentTabBarController()
         
     }
     
     @IBAction func shareMeme(sender: UIBarButtonItem) {
         
-        let newMeme = save()
-        let memedImage = newMeme.memedImage
+        //create Meme
+        let meme = Meme(topTextField: topTextField.text!, bottomTextField: bottomTextField.text!, origionalImage:
+            imagePickerView.image!, memedImage: generatedMemedImage())
+
+        let memedImage = meme.memedImage
         let nextController = UIActivityViewController(activityItems: [memedImage], applicationActivities: nil)
         
         nextController.completionWithItemsHandler = {(type: String?, completed: Bool, returnedItems: [AnyObject]?, error: NSError?) -> Void in
             dispatch_async(dispatch_get_main_queue()){
-                self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+                
+                if completed {
+                    self.save(meme)
+                    self.presentTabBarController()
+                }
+                
+
             }
         }
         
         presentViewController(nextController, animated: true, completion: nil)
 
+    }
+    
+    func presentTabBarController() {
+        
+        let tabBarController = self.storyboard?.instantiateViewControllerWithIdentifier("tabBarController") as! UITabBarController
+        self.presentViewController(tabBarController, animated: true, completion: nil)
+        
     }
     
 }

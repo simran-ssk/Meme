@@ -10,6 +10,7 @@ import UIKit
 
 class MemeTableViewController: UITableViewController, UINavigationControllerDelegate {
     
+    
     let memeTextAttributes = [
         NSForegroundColorAttributeName: UIColor.whiteColor(),
         NSStrokeColorAttributeName: UIColor.blackColor(),
@@ -26,15 +27,20 @@ class MemeTableViewController: UITableViewController, UINavigationControllerDele
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.separatorColor = UIColor.clearColor()
+        
     }
     
-    
     override func viewWillAppear(animated: Bool) {
+        
+        tabBarController!.tabBar.hidden = false
         super.viewWillAppear(animated)
         self.tableView!.reloadData()
-           }
+        
+    }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         return memes.count
     }
     
@@ -67,19 +73,17 @@ class MemeTableViewController: UITableViewController, UINavigationControllerDele
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        /*let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("MemeDetailViewController") as! MemeDetailViewController
-        detailController.villain = self.allVillains[indexPath.row]
+        let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("MemeDetailViewController") as! MemeDetailViewController
+        detailController.meme = self.memes[indexPath.row]
         self.navigationController!.pushViewController(detailController, animated: true)
         
-    }*/
+        
     }
     
     @IBAction func goToMemeEditor(sender: UIBarButtonItem) {
         
-        let editorController = self.storyboard!.instantiateViewControllerWithIdentifier("meme") as! MemeEditorViewController
-        let navController = UINavigationController(rootViewController: editorController)
-
-        presentViewController(navController, animated: true, completion: nil)
+        let editorController = self.storyboard!.instantiateViewControllerWithIdentifier("memeEditor") as! UINavigationController
+        presentViewController(editorController, animated: true, completion: nil)
         
         
     }

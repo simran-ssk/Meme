@@ -27,17 +27,22 @@ class MemeCollectionViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.collectionView?.backgroundColor = UIColor.whiteColor()
+        
+        
+        
         let space: CGFloat = 3.0
-        let dimesion = (self.view.frame.size.width - (2 * space)) / 3.0
+        let dimension = (self.view.frame.size.width - (2 * space)) / 3.0
+        
         flowLayout.minimumInteritemSpacing = space
-        flowLayout.minimumLineSpacing = space
-        flowLayout.itemSize = CGSizeMake(dimesion, dimesion)
+        flowLayout.itemSize = CGSizeMake(dimension, dimension)
 
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        tabBarController!.tabBar.hidden = false
+        self.collectionView?.backgroundColor = UIColor.whiteColor()
         self.collectionView!.reloadData()
         tabBarController?.tabBar.hidden = false
         
@@ -75,16 +80,40 @@ class MemeCollectionViewController: UICollectionViewController {
         
     }
     
+   /* func setCellWidth()
+    {
+        // Use a different number of images per row depending on the orientation of the device
+        if UIDevice.currentDevice().orientation.isLandscape.boolValue
+        {
+            let cellWidth = ( self.view.bounds.width - 4 ) / 4
+            
+            flowLayout.itemSize = CGSizeMake(cellWidth, cellHeight)
+        }
+        else
+        {
+            let cellWidth = ( self.view.bounds.width - 3 ) / 3
+            flowLayout.itemSize = CGSizeMake(cellWidth, cellHeight)
+        }
+    }*/
+    
 
     
-    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath:NSIndexPath)
-    {
+    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath:NSIndexPath) {
         
-        /*let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("VillainDetailViewController") as! VillainDetailViewController
-        detailController.villain = self.allVillains[indexPath.row]
-        self.navigationController!.pushViewController(detailController, animated: true)*/
+        let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("MemeDetailViewController") as! MemeDetailViewController
+        detailController.meme = self.memes[indexPath.row]
+        self.navigationController!.pushViewController(detailController, animated: true)
         
     }
+    
+    @IBAction func goToMemeEditor(sender: UIBarButtonItem) {
+        
+        let editorController = self.storyboard!.instantiateViewControllerWithIdentifier("memeEditor") as! UINavigationController
+        presentViewController(editorController, animated: true, completion: nil)
+        
+        
+    }
+
 
 
 
