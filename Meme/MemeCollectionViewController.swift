@@ -41,10 +41,8 @@ class MemeCollectionViewController: UICollectionViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        tabBarController!.tabBar.hidden = false
         self.collectionView?.backgroundColor = UIColor.whiteColor()
         self.collectionView!.reloadData()
-        tabBarController?.tabBar.hidden = false
         
     }
     

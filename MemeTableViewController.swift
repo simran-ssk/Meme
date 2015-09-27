@@ -33,7 +33,6 @@ class MemeTableViewController: UITableViewController, UINavigationControllerDele
     
     override func viewWillAppear(animated: Bool) {
         
-        tabBarController!.tabBar.hidden = false
         super.viewWillAppear(animated)
         self.tableView!.reloadData()
         
@@ -60,6 +59,13 @@ class MemeTableViewController: UITableViewController, UINavigationControllerDele
         return cell
     }
     
+    /*override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if editingStyle == UITableViewCellEditingStyle.Delete {
+            memes.removeAtIndex(indexPath.row)
+        }
+    }*/
+    
     func setTextFieldAttributes(cell: MemeTableCell) {
         
         cell.topTextField.defaultTextAttributes = memeTextAttributes
@@ -71,9 +77,11 @@ class MemeTableViewController: UITableViewController, UINavigationControllerDele
         
     }
     
+    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("MemeDetailViewController") as! MemeDetailViewController
+        print(self.memes[indexPath.row])
         detailController.meme = self.memes[indexPath.row]
         self.navigationController!.pushViewController(detailController, animated: true)
         

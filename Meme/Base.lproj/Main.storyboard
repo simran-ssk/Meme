@@ -23,7 +23,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FRQ-Ip-4iv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-900" y="-744"/>
+            <point key="canvasLocation" x="-900" y="-743.99999999999989"/>
         </scene>
         <!--Meme Editor View Controller-->
         <scene sceneID="ufC-wZ-h7g">
@@ -40,12 +40,12 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="TLu-BT-YAi">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </scrollView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="TOP" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qfY-EF-lPt">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="TOP" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qfY-EF-lPt">
                                 <rect key="frame" x="20" y="89" width="560" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="BOTTOM" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lMc-Km-ACA">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="BOTTOM" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lMc-Km-ACA">
                                 <rect key="frame" x="20" y="514" width="560" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
@@ -104,7 +104,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-203" y="-744"/>
+            <point key="canvasLocation" x="-203" y="-743.99999999999989"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="OgC-fi-Iy2">
@@ -123,7 +123,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ypQ-kj-Qaz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="530" y="-744"/>
+            <point key="canvasLocation" x="530" y="-743.99999999999989"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="BWG-xx-8pP">
@@ -144,7 +144,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sr0-ao-NdL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1318" y="-1090"/>
+            <point key="canvasLocation" x="1318" y="-1089.9999999999995"/>
         </scene>
         <!--Meme Detail View Controller-->
         <scene sceneID="dhB-Wo-4yc">
@@ -172,11 +172,12 @@
                     </view>
                     <connections>
                         <outlet property="memeImageView" destination="236-E8-VDA" id="csJ-B5-GO4"/>
+                        <segue destination="vXZ-lx-hvc" kind="show" identifier="memeEditor" id="Bg8-CW-6B1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vOd-go-K19" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2889" y="-744"/>
+            <point key="canvasLocation" x="-203" y="-1549"/>
         </scene>
         <!--Sent Memes-->
         <scene sceneID="BAe-Xd-GhS">
@@ -258,7 +259,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EO0-Ha-EvX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2127" y="-1095"/>
+            <point key="canvasLocation" x="2127" y="-1090"/>
         </scene>
         <!--Sent Memes-->
         <scene sceneID="J7v-wu-Uz1">
@@ -377,4 +378,7 @@
         <image name="collection" width="30" height="30"/>
         <image name="table" width="30" height="30"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="Bg8-CW-6B1"/>
+    </inferredMetricsTieBreakers>
 </document>

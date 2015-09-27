@@ -17,6 +17,7 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
     @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var scrollView: UIScrollView!
     var imagePickerView = UIImageView()
+    var savedMeme: Meme?
     var flag1: Bool = true
     var flag2: Bool = true
     
@@ -48,6 +49,11 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         
         setTextFieldAttributes()
         
+        if !(savedMeme == nil) {
+            setSavedMeme(savedMeme!)
+        }
+        
+        
         subscribeToKeyboardNotfications()
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
         if !(imagePickerView.image == nil){
@@ -57,6 +63,7 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         }
         
     }
+    
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
@@ -255,6 +262,26 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         dismissViewControllerAnimated(true, completion: nil)
         
     }
+    
+    func setSavedMeme(savedMeme: Meme) {
+        
+        let image = savedMeme.origionalImage
+        
+        imagePickerView.removeFromSuperview()
+        imagePickerView = UIImageView()
+        imagePickerView.image = image
+        imagePickerView.sizeToFit()
+        imagePickerView.frame = CGRectMake(0, 0, image.size.width, image.size.height)
+        scrollView.contentSize = imagePickerView.bounds.size
+        scrollView.addSubview(imagePickerView)
+        setZoomParameters()
+        centerScrollViewContents()
+        topTextField.text = savedMeme.topTextField
+        bottomTextField.text = savedMeme.bottomTextField
+
+        
+    }
+
     
     @IBAction func pickAnImagefromAlbum(sender: AnyObject) {
         
