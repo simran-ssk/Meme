@@ -36,6 +36,11 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         topTextField.delegate = self
         bottomTextField.delegate = self
         
+        if !(savedMeme == nil) {
+            setSavedMeme(savedMeme!)
+        }
+        
+        
     }
     
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
@@ -50,10 +55,6 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         
         navigationController?.toolbarHidden = false
         setTextFieldAttributes()
-        
-        if !(savedMeme == nil) {
-            setSavedMeme(savedMeme!)
-        }
         
         
         subscribeToKeyboardNotfications()
@@ -275,7 +276,6 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         imagePickerView.removeFromSuperview()
         imagePickerView = UIImageView()
         imagePickerView.image = image
-        imagePickerView.sizeToFit()
         imagePickerView.frame = CGRectMake(0, 0, image.size.width, image.size.height)
         scrollView.contentSize = imagePickerView.bounds.size
         scrollView.addSubview(imagePickerView)
