@@ -18,6 +18,7 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
     @IBOutlet weak var scrollView: UIScrollView!
     var imagePickerView = UIImageView()
     var savedMeme: Meme?
+    var savedIndex: Int? = nil
     var flag1: Bool = true
     var flag2: Bool = true
     
@@ -47,6 +48,7 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        navigationController?.toolbarHidden = false
         setTextFieldAttributes()
         
         if !(savedMeme == nil) {
@@ -145,9 +147,12 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         // Add it to the memes array in the Application Delegate
         let object = UIApplication.sharedApplication().delegate
         let appDelegate = object as! AppDelegate
-        appDelegate.memes.append(meme)
-
-        
+        if savedIndex == nil {
+            appDelegate.memes.append(meme)
+        } else {
+            appDelegate.memes[savedIndex!] = meme
+        }
+    
     }
     
     func generatedMemedImage() -> UIImage {
@@ -276,6 +281,9 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         scrollView.addSubview(imagePickerView)
         setZoomParameters()
         centerScrollViewContents()
+        scrollView.contentInset = savedMeme.contentInset
+        scrollView.zoomScale = savedMeme.zoomScale
+        scrollView.contentOffset = savedMeme.contentOffset
         topTextField.text = savedMeme.topTextField
         bottomTextField.text = savedMeme.bottomTextField
 
@@ -318,7 +326,7 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
         
         //create Meme
         let meme = Meme(topTextField: topTextField.text!, bottomTextField: bottomTextField.text!, origionalImage:
-            imagePickerView.image!, memedImage: generatedMemedImage())
+            imagePickerView.image!, memedImage: generatedMemedImage(), zoomScale: scrollView.zoomScale, contentInset: scrollView.contentInset, contentOffset: scrollView.contentOffset)
 
         let memedImage = meme.memedImage
         let nextController = UIActivityViewController(activityItems: [memedImage], applicationActivities: nil)

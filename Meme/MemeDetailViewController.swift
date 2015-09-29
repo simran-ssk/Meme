@@ -12,6 +12,7 @@ class MemeDetailViewController: UIViewController {
 
     @IBOutlet var memeImageView: UIImageView!
     var rightButton: UIBarButtonItem!
+    var savedIndex: Int? = nil
     
     var meme: Meme!
     
@@ -42,15 +43,13 @@ class MemeDetailViewController: UIViewController {
     
     func editMeme() {
         
-        performSegueWithIdentifier("memeEditor", sender: self)
+        //performSegueWithIdentifier("memeEditor", sender: self)
         
-        /*let editorController = self.storyboard!.instantiateViewControllerWithIdentifier("memeEditor") as! UINavigationController
-        /*let memeEditorController = self.storyboard?.instantiateViewControllerWithIdentifier("meme") as! MemeEditorViewController
-        memeEditorController.imagePickerView.image = meme.origionalImage
-        memeEditorController.topTextField?.text = meme.topTextField
-        memeEditorController.bottomTextField?.text = meme.bottomTextField
-        let navController = UINavigationController(rootViewController: memeEditorController)*/
-        presentViewController(editorController, animated: true, completion: nil)*/
+        let memeEditorController = self.storyboard?.instantiateViewControllerWithIdentifier("meme") as! MemeEditorViewController
+        memeEditorController.savedMeme = self.meme
+        memeEditorController.savedIndex = self.savedIndex
+        let navController = UINavigationController(rootViewController: memeEditorController)
+        presentViewController(navController, animated: true, completion: nil)
 
     }
 

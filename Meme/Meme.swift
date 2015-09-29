@@ -14,5 +14,7 @@ struct Meme {
     var bottomTextField: String
     var origionalImage: UIImage
     var memedImage: UIImage
-    
+    var zoomScale: CGFloat
+    var contentInset: UIEdgeInsets
+    var contentOffset: CGPoint
 }
