@@ -21,29 +21,18 @@ class MemeDetailViewController: UIViewController {
         
         rightButton = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Plain, target: self, action: "editMeme")
         self.navigationItem.rightBarButtonItem = rightButton
-
-        
         tabBarController!.tabBar.hidden = true
         memeImageView?.image = meme.memedImage
-    
-        
+
     }
     
     override func viewWillDisappear(animated: Bool) {
+        
         super.viewWillDisappear(animated)
         self.tabBarController?.tabBar.hidden = false
     }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let controller = segue.destinationViewController as! MemeEditorViewController
         
-        controller.savedMeme = self.meme
-    }
-
-    
     func editMeme() {
-        
-        //performSegueWithIdentifier("memeEditor", sender: self)
         
         let memeEditorController = self.storyboard?.instantiateViewControllerWithIdentifier("meme") as! MemeEditorViewController
         memeEditorController.savedMeme = self.meme

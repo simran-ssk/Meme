@@ -59,13 +59,6 @@ class MemeTableViewController: UITableViewController, UINavigationControllerDele
         return cell
     }
     
-    /*override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        
-        if editingStyle == UITableViewCellEditingStyle.Delete {
-            memes.removeAtIndex(indexPath.row)
-        }
-    }*/
-    
     func setTextFieldAttributes(cell: MemeTableCell) {
         
         cell.topTextField.defaultTextAttributes = memeTextAttributes
@@ -85,14 +78,12 @@ class MemeTableViewController: UITableViewController, UINavigationControllerDele
         detailController.savedIndex = indexPath.row
         self.navigationController!.pushViewController(detailController, animated: true)
         
-        
     }
     
     @IBAction func goToMemeEditor(sender: UIBarButtonItem) {
         
         let editorController = self.storyboard!.instantiateViewControllerWithIdentifier("memeEditor") as! UINavigationController
         presentViewController(editorController, animated: true, completion: nil)
-        
         
     }
     

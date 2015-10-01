@@ -28,8 +28,6 @@ class MemeCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
         let space: CGFloat = 3.0
         let dimension = (self.view.frame.size.width - (2 * space)) / 3.0
         
@@ -56,13 +54,11 @@ class MemeCollectionViewController: UICollectionViewController {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("MemeCollectionViewCell", forIndexPath: indexPath) as! MemeCollectionViewCell
         let meme = memes[indexPath.row]
         
-        
         cell.origionalImage?.image = meme.origionalImage
         cell.topTextField?.text = meme.topTextField
         cell.bottomTextField?.text = meme.bottomTextField
         
         setTextFieldAttributes(cell)
-    
 
         return cell
     }
@@ -78,24 +74,6 @@ class MemeCollectionViewController: UICollectionViewController {
         
     }
     
-   /* func setCellWidth()
-    {
-        // Use a different number of images per row depending on the orientation of the device
-        if UIDevice.currentDevice().orientation.isLandscape.boolValue
-        {
-            let cellWidth = ( self.view.bounds.width - 4 ) / 4
-            
-            flowLayout.itemSize = CGSizeMake(cellWidth, cellHeight)
-        }
-        else
-        {
-            let cellWidth = ( self.view.bounds.width - 3 ) / 3
-            flowLayout.itemSize = CGSizeMake(cellWidth, cellHeight)
-        }
-    }*/
-    
-
-    
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath:NSIndexPath) {
         
         let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("MemeDetailViewController") as! MemeDetailViewController
@@ -110,10 +88,6 @@ class MemeCollectionViewController: UICollectionViewController {
         let editorController = self.storyboard!.instantiateViewControllerWithIdentifier("memeEditor") as! UINavigationController
         presentViewController(editorController, animated: true, completion: nil)
         
-        
     }
-
-
-
 
 }
