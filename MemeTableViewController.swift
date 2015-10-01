@@ -28,14 +28,23 @@ class MemeTableViewController: UITableViewController, UINavigationControllerDele
         super.viewDidLoad()
         
         tableView.separatorColor = UIColor.clearColor()
+        navigationItem.leftBarButtonItem = self.editButtonItem()
         
     }
     
     override func viewWillAppear(animated: Bool) {
         
         super.viewWillAppear(animated)
-        self.tableView!.reloadData()
+        tableView!.reloadData()
         
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if editing {
+            setEditing(false, animated: false)
+        }
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -57,6 +66,15 @@ class MemeTableViewController: UITableViewController, UINavigationControllerDele
         setTextFieldAttributes(cell)
         
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.Delete {
+            let object = UIApplication.sharedApplication().delegate
+            let appDelegate = object as! AppDelegate
+            appDelegate.memes.removeAtIndex(indexPath.row)
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+        }
     }
     
     func setTextFieldAttributes(cell: MemeTableCell) {

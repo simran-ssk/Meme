@@ -341,7 +341,7 @@ class MemeEditorViewController: UIViewController, UITextFieldDelegate, UIImagePi
     func presentTabBarController() {
         
         let tabBarController = self.storyboard?.instantiateViewControllerWithIdentifier("tabBarController") as! UITabBarController
-        self.presentViewController(tabBarController, animated: true, completion: nil)
+        presentViewController(tabBarController, animated: true, completion: nil)
         
     }
     
